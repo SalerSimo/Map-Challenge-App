@@ -1,0 +1,125 @@
+button{
+    font-size: 1.5rem;
+}
+
+.main-container{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1%;
+    gap: 5px;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 20%;
+    height: 700px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content div {
+    padding: 8px;
+    cursor: pointer;
+}
+.dropdown-content div:hover {
+    background-color: #f1f1f1;
+}
+
+.navigator{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.searchInput {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: solid 2px;
+}
+
+.customButton{
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+}
+
+.change-floor:hover{
+    background-color: orangered;
+}
+
+.change-floor{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #FF9358;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-image{
+    width: 70%; 
+    height: 70%; 
+    object-fit: contain;
+}
+
+.legend{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pallino{
+    border-radius: 50%;
+    height: 20px;
+    aspect-ratio: 1;
+}
+
+.select-accessibility{
+    width: 100%;
+}
+
+.step-container{
+    position: absolute;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    align-items: center;
+    gap: 10px;
+}
+.text-instructions{
+    font-size: 15px;
+    background-color: white;
+    border-radius: 20px;
+    width: auto;
+    overflow-wrap: break-word;
+}
+.map-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.step-button{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #FF9358;
+    cursor: pointer;
+}
+
+select{
+    border-radius: 10px;
+}

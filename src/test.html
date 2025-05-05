@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searchable Dropdown</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 8px;
+        }
+        .dropdown-content div {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .dropdown-content div:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body onload="init()">
+    <div class="dropdown">
+        <input onclick="toggleDropdown()" type="text" id="searchInput" onkeyup="filterOptions()" placeholder="Search..."></input>
+        <div id="dropdown-content" class="dropdown-content">
+            <div onclick="selectOption('Option 1')">Option 1</div>
+            <div onclick="selectOption('Option 2')">Otion 2</div>
+            <div onclick="selectOption('Option 3')">Opion 3</div>
+        </div>
+    </div>
+
+    <label for="fruit">Choose a fruit:</label>
+    <input list="fruits" id="fruit" name="fruit">
+
+    <datalist id="fruits"></datalist>
+
+    <script>
+        function toggleDropdown() {
+            document.getElementById("dropdown-content").style.display = "block";
+        }
+
+
+        var data = {
+            "Entrance Classrooms T": 1126,
+            "Laib 1T": 1798,
+            "Classroom 5T": 861,
+            "Classroom 7T": 1726,
+            "Classroom 9T": 868,
+            "Classroom 11T": 1280,
+
+            "Classroom 4T": 1716
+        }
+
+        function init() {
+            let upperDiv = document.getElementById("dropdown-content");
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var div = document.createElement("div");
+                    div.onclick = (function(value) {
+                        return function() {
+                            selectOption(value);
+                        };
+                    })(key);
+                    div.textContent = key;
+                    upperDiv.appendChild(div);
+                }
+            }
+        }
+
+
+        function filterOptions() {
+            var input, filter, div, i;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("dropdown-content").getElementsByTagName("div");
+            for (i = 0; i < div.length; i++) {
+                if (div[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    div[i].style.display = "";
+                } else {
+                    div[i].style.display = "none";
+                }
+            }
+        }
+
+        function selectOption(element, option) {
+            document.getElementById("searchInput").value = option;
+            alert("You selected: " + option);
+            document.getElementById("dropdown-content").style.display = "none";
+        }
+    </script>
+</body>
+</html>

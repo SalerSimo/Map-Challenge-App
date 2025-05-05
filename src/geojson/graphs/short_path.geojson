@@ -1,0 +1,30 @@
+{
+"type": "FeatureCollection",
+"name": "short_path",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "floor_id": "XPTE", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660189488679786, 45.061314961413494 ], [ 7.660163617812956, 45.061278661076763 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XPTE", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660163617812956, 45.061278661076763 ], [ 7.66018222757629, 45.061272217080834 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XPTE", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.66018222757629, 45.061272217080834 ], [ 7.660189773546181, 45.06128280518233 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP01_XPTE", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660189773546181, 45.06128280518233 ], [ 7.660194721856298, 45.061293029953909 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP01", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660194721856298, 45.061293029953909 ], [ 7.66020626121869, 45.061309221184942 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP01", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.66020626121869, 45.061309221184942 ], [ 7.660189476551559, 45.061315033201751 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP01", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660189476551559, 45.061315033201751 ], [ 7.660163605684727, 45.061278732865055 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP01", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660163605684727, 45.061278732865055 ], [ 7.660182215448063, 45.061272288869141 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP01", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660182215448063, 45.061272288869141 ], [ 7.66018966495565, 45.061282741619898 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP01_XP02", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.66018966495565, 45.061282741619898 ], [ 7.660195613099035, 45.061294150697243 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP02", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660195613099035, 45.061294150697243 ], [ 7.660207152463893, 45.061310341927104 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP02", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660207152463893, 45.061310341927104 ], [ 7.660190367796762, 45.0613161539438 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP02", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660190367796762, 45.0613161539438 ], [ 7.66016449692993, 45.061279853607822 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP02", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.66016449692993, 45.061279853607822 ], [ 7.660183106693266, 45.061273409612021 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP02", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660183106693266, 45.061273409612021 ], [ 7.660188835875654, 45.061281448238176 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP02_XP03", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660188835875654, 45.061281448238176 ], [ 7.660194772393133, 45.061293012394962 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP03", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660194772393133, 45.061293012394962 ], [ 7.660206172126945, 45.061309007375449 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP03", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660206172126945, 45.061309007375449 ], [ 7.660189387459813, 45.061314819392287 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP03", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660189387459813, 45.061314819392287 ], [ 7.660163516592982, 45.061278519055456 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP03", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660163516592982, 45.061278519055456 ], [ 7.660182126356317, 45.061272075059513 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP03", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660182126356317, 45.061272075059513 ], [ 7.660187995360237, 45.06128030986968 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP03_XP04", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660187995360237, 45.06128030986968 ], [ 7.660196493081108, 45.061295426443657 ] ] } },
+{ "type": "Feature", "properties": { "floor_id": "XP04", "vert": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 7.660196493081108, 45.061295426443657 ], [ 7.660207892650738, 45.061311421448075 ] ] } }
+]
+}

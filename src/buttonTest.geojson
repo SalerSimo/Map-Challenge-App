@@ -1,0 +1,16 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.659241037925569, 45.06507998968402]
+        },
+        "properties": {
+          "name": "Turin Polito",
+          "popupContent": "<button class='custom-button' onclick='alert(\"Button clicked!\")'></button>"
+        }
+      }
+    ]
+  }

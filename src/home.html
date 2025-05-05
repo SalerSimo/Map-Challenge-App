@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic QGIS Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/style.css">
+    <script defer src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
+    <script defer src="../src/script.js"></script>
+
+</head>
+<body>
+    <div class="main-container">
+        <div id="map" style="width: 75%; height: 700px; border: solid;">
+            <div class="step-container">
+                <div class="text-instructions" id="div-instruction"></div>
+                <div class="map-buttons"></div>
+            </div>
+            
+        </div>
+        <div class="inputs">
+            <select class="select-floor" style="font-size: 1.5rem; padding: 5px;" name="floor" id="floor">
+                <option class="option" value="5">Floor 5</option>
+                <option class="option" value="4">Floor 4</option>
+                <option class="option" value="3">Floor 3</option>
+                <option class="option" value="2">Floor 2</option>
+                <option class="option" value="1">Floor 1</option>
+                <option class="option" value="0" selected>Floor 0</option>
+                <option class="option" value="-1">Floor -1</option>
+            </select>
+            <div class="navigator">
+                <div>
+                    <label for="sourceInput">Current position</label>
+                    <input ondblclick="clean(this)" list="names" id="sourceInput" class="searchInput" placeholder="Insert current location">
+                </div>
+                <div>
+                    <label for="targetInput">Destination</label>
+                    <input ondblclick="clean(this)" list="names" id="targetInput" class="searchInput" placeholder="Insert current location">
+                </div>
+                
+                <datalist id="names"></datalist>
+        
+                <button style="padding: 10px; border-radius: 20px; cursor: pointer;" onclick="findPath()">Show Path</button>
+
+                <div style="margin-top: 20px;">
+                    <label for="accessibility">Accessibility</label>
+                    <select class="select-accessibility" style="font-size: 1.5rem; padding: 5px" id="accessibility">
+                        <option class="option" value="0">Normal</option>
+                        <option class="option" value="1">Wheelchair</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 30px;">
+                    <div class="legend">
+                        <div class="pallino" style="background-color: #FFFF36;"></div>
+                        Learning spaces
+                    </div>
+                    <div class="legend">
+                        <div class="pallino" style="background-color: #9F29FF;"></div>
+                        Utilities & Access
+                    </div>
+                    <div class="legend">
+                        <div class="pallino" style="background-color: #1A5EDC;"></div>
+                        Info points, Offices & Research Labs
+                    </div>
+                    <div class="legend">
+                        <div class="pallino" style="background-color: #BDDE00;"></div>
+                        Food & Relaxation
+                    </div>
+                    <div class="legend">
+                        <div class="pallino" style="background-color: #F2A7B1;"></div>
+                        Toilets
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

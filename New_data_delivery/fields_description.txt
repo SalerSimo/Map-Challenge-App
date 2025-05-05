@@ -1,0 +1,25 @@
+    id integer NOT NULL -- unique room identifier (primary key),
+    building_id character varying -- building identifier,
+    floor_id character varying -- floor identifier,
+    room_id character varying -- room identifier,
+    room_name_it character varying -- name of the room in italian,
+    room_name_en character varying -- name of the room in english,
+    bld_name_it character varying -- name of the building in italian,
+    bld_name_en character varying -- name of the building in english,
+    category_it character varying -- room category in italian,
+    category_en character varying -- room category in english (incomplete),
+    department_it character varying -- name of the department in italian,
+    department_en character varying -- name of the department in english,
+    site character varying -- identifier of the site,
+    resources json -- information about the room,
+    lat double precision -- latitude coordinate of the centroid of the room (useful to convert rooms in points or to position an icon),
+    lon double precision  -- latitude coordinate of the centroid of the room (useful to convert rooms in points or to position an icon),
+    geom public.geometry(Polygon,4326) -- geometry field containg the shape of the room
+	
+	id character varying(1000) -- identifier of the edge
+    building_id character varying(1000) -- building identifier,
+    floor_id character varying(1000) -- floor identifier,
+    vert integer -- 1 if the edge identifies a vertical element, like stairs or elevators, 0 otherwise,
+    private integer -- 1 if the edge is in a private space, not accessible for the students, 0 otherwise,
+    no_disab integer -- 1 if the edge is not traversable by wheelchair, 0 otherwise,
+    geom public.geometry(LineStringZ,4326) -- geometry field containg the shape of the edges
