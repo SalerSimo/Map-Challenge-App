@@ -75,13 +75,19 @@ function init(){
         map.getPane('buttonPane').style.zIndex = 600;
     }
 
+    window.addEventListener('load', () => {console.log('caricaa');});
+
     var mainContainer = document.getElementsByClassName('main-container')[0];
     mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';
-    
-    /*if(localStorage.getItem('findPath') == 1){
+
+    var mapDiv = document.getElementById('map');
+    //mapDiv.style.maxHeight = mainContainer.offsetHeight * 0.5 + 'px';
+    mapDiv.style.height = '70dvh'
+
+    if(localStorage.getItem('findPath') == 1){
         var accessibility = localStorage.getItem('accessibility');
         findPath(accessibility);
-    }*/
+    }
 
     localStorage.setItem('findPath', 0);
 
@@ -906,18 +912,20 @@ function createStepInstructions(features){
 
     var instructions = [];
     var distance = 0;
+    var string;
+    
     for(let i = 0; i < features.length; i++){
         var feature = features[i];
         var coordinates = feature.geometry.coordinates;
         if(feature.properties.floor_id.includes('_')){
-            var string = "Walk for " + distance.toFixed(0) + " meters, then take the " + getStairsOrElevator(coordinates) + " and go to " + floorToString(features[i + 1].properties.floor_id);
+            string = "Walk for " + distance.toFixed(0) + " meters, then take the " + getStairsOrElevator(coordinates) + " and go to " + floorToString(features[i + 1].properties.floor_id);
             instructions.push(string);
             distance = 0;
         }else{
             distance += distanceMeters(coordinates[0], coordinates[1]);
         }
     }
-    var string = "Walk for " + distance.toFixed(0) + " meters";
+    string = "Walk for " + distance.toFixed(0) + " meters";
     instructions.push(string);
     return instructions;
 }
@@ -1136,7 +1144,7 @@ function advanceInput(){
 
         localStorage.setItem('findPath', 1);
         localStorage.setItem('accessibility', accessibility);
-        window.location.href='../src/navigator_mobile.html';
+        window.location.href='../src/home_mobile.html';
     }
     /*var targetInput = document.getElementById("targetInput");
     saveTargetId(targetInput.value);
@@ -1164,7 +1172,7 @@ async function goToFindPath(){
     console.log(JSON.parse(localStorage.getItem('pathLayers')));
     localStorage.setItem('buttonLayers', buttonLayers);*/
     localStorage.setItem('findPath', 1);
-    window.location.href='../src/navigator_mobile.html';
+    window.location.href='../src/home_mobile.html';
 }
 
 function initInput(){
@@ -1177,7 +1185,6 @@ function initInput(){
     var searchInput = document.getElementsByClassName('searchInput')[0];
     searchInput.addEventListener('keydown', function(event){
         var errorMessage = document.getElementById('error-input-message');
-        console.log(errorMessage);
         if(errorMessage != null){
             errorMessage.parentElement.removeChild(errorMessage);
         }

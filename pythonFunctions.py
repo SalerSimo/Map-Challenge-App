@@ -163,7 +163,41 @@ def export_shortest_path_to_geojson(graph: nx.Graph, path):
         '''if(add != 0):
             print("i: ", i)
             flag = 1'''
+        
+    icons_features = []
+    feature = {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": path[0]
+        },
+        "properties": {
+            "floor_id":  graph.get_edge_data(path[0], path[1])['floor_id'],
+            "icon": {
+                'html': f'<div class="destination-div" style="background-color: transparent; transform: translate(-50%, -92%);"><img src="../src/img/start_position.svg" class="destination-icon"></img></div>',
+                'className': 'change-floor'
+            },
+            "distance": edge['weight']
+        }
+    }
 
+    icons_features.append(feature)
+    feature = {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": path[len(path) - 1]
+        },
+        "properties": {
+            "floor_id":  graph.get_edge_data(path[len(path) - 2], path[len(path) - 1])['floor_id'],
+            "icon": {
+                'html': f'<div class="destination-div" style="background-color: white;"><img src="../src/img/destination_icon.svg" class="destination-icon"></img></div>',
+                'className': 'change-floor'
+            },
+            "distance": edge['weight']
+        }
+    }
+    icons_features.append(feature)
 
     geojson = {
         "type": "FeatureCollection",
@@ -175,11 +209,19 @@ def export_shortest_path_to_geojson(graph: nx.Graph, path):
         "features": button_features
     }
 
+    icons_geojson = {
+        "type": "FeatureCollection",
+        "features": icons_features
+    }
+
     with open("src/geojson/paths/shortest_path.geojson", "w") as f:
         json.dump(geojson, f)
 
     with open("src/geojson/paths/buttons.geojson", "w") as f:
         json.dump(button_geojson, f)
+
+    with open("src/geojson/paths/icons.geojson", "w") as f:
+        json.dump(icons_geojson, f)
 
         #write buttons
     return path[0], graph.get_edge_data(path[0], path[1])['floor_id']

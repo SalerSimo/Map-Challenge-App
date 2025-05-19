@@ -2,21 +2,20 @@ from flask import Flask, request, jsonify, send_from_directory
 import subprocess
 import os
 
+from pythonFunctions import findPath
+
 app = Flask(__name__, static_folder='src')
 
 @app.route('/api/run-python', methods=['POST'])
 def run_python():
     data = request.json
-    function_name = data['functionName']
     args = data['args']
-    print(str(args))
-    result = subprocess.run(['python', 'pythonFunctions.py', function_name, str(args)], capture_output=True, text=True)
-    print(result)
-    return jsonify({'result': result.stdout.strip()})
+    result = findPath(args)
+    return jsonify({'result': result})
 
 @app.route('/')
 def serve_index():
-    return send_from_directory(app.static_folder, 'home.html')
+    return send_from_directory(app.static_folder, 'home_mobile.html')
     
 
 if __name__ == '__main__':

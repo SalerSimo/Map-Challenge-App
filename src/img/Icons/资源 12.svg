@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.62 29.62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #33bf9e;
+      }
+
+      .cls-2, .cls-3 {
+        fill: none;
+        stroke: #f7f7f7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-4 {
+        fill: #f7f7f7;
+      }
+
+      .cls-3 {
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <g id="_图层_2-2" data-name="图层 2">
+    <g>
+      <circle class="cls-1" cx="14.81" cy="14.81" r="14.81"/>
+      <g>
+        <rect class="cls-4" x="7.05" y="12.87" width="12" height="8.55" rx="1" ry="1"/>
+        <rect class="cls-4" x="7.05" y="18.49" width="12" height="4.15" rx="2.07" ry="2.07"/>
+        <path class="cls-2" d="M9.64,6.98c.12,1.03,.49,1.62,.81,1.96,.43,.46,.82,.54,1.17,1.06,.36,.54,.4,1.15,.38,1.57"/>
+        <path class="cls-2" d="M13.2,6.98c.12,1.03,.49,1.62,.81,1.96,.43,.46,.82,.54,1.17,1.06,.36,.54,.4,1.15,.38,1.57"/>
+        <ellipse class="cls-3" cx="19.64" cy="16.52" rx="2.93" ry="2.62"/>
+      </g>
+    </g>
+  </g>
+</svg>

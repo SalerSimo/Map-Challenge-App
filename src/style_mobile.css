@@ -4,16 +4,20 @@ button{
 
 .main-container{
     display: flex;
-    justify-content: space-around;
+    /*justify-content: space-around;*/
     align-items: center;
+    flex-direction: column;
     gap: 5px;
+    border: none;
+    box-sizing: border-box;
+    border: solid;
+    border-radius: 30px;
+    padding: 40px 10px 10px 10px;
 }
 
 .inputs{
     display: flex;
-    flex-direction: column;
-    gap: 50px;
-    width: 20%;
+    gap: 10px;
 }
 
 .dropdown-content {
@@ -34,15 +38,14 @@ button{
 
 .navigator{
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 }
 .searchInput {
     box-sizing: border-box;
     width: 100%;
-    padding: 8px;
-    font-size: 1.2rem;
-    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 1rem;
+    border-radius: 20px;
     border: solid 2px;
 }
 
@@ -160,7 +163,7 @@ select{
 
 
 .accessibility-checkbox{
-    height: 20px;
+    height: 15px;
     width: 20px;
 }
 
@@ -186,4 +189,22 @@ select{
     transform: translate(-50%, -50%);
     align-content: center;
     justify-content: center;
+}
+
+.input{
+    border: solid;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+}
+
+.back{
+    border: solid 2px;
+    border-radius: 10px;
+    display: flex;
+    width: fit-content;
+    font-size: 1.5rem;
+    padding: 0px 5px;
+    cursor: pointer;
 }

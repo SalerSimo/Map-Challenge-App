@@ -11,7 +11,7 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-cur.execute("SELECT category_en FROM classrooms_t_i GROUP BY category_en")
+cur.execute("SELECT category_it FROM classrooms_t_i GROUP BY category_it")
 
 rows = cur.fetchall()
 for row in rows:
