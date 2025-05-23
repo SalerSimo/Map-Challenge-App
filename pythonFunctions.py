@@ -40,14 +40,14 @@ def findPath(args):
     accessibility = args[2]
 
     graph_tables = [
-        "src/geojson/graphs/graph_classrooms_t_i.geojson",
-        "src/geojson/graphs/graph_central_site_01.geojson"
+        "../Map-Challenge-App/src/geojson/graphs/graph_classrooms_t_i.geojson",
+        "../Map-Challenge-App/src/geojson/graphs/graph_central_site_01.geojson"
     ]
 
     for i in range(len(graph_tables)):
         #G = Create_Graph(cur, accessibility)
         graph_path = graph_tables[i]
-        vertices = load_geojson('src/geojson/Nodes/vertices.geojson')
+        vertices = load_geojson('../Map-Challenge-App/src/geojson/Nodes/vertices.geojson')
         print(vertices)
         print("vertices loaded")
         try:
