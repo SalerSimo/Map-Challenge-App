@@ -4,6 +4,7 @@ var map;
 var prevZoom = 20;
 var layerUrl;
 var sourceId, targetId;
+const maxDropdown = 1000;
 
 var pathLayers = [];
 
@@ -17,7 +18,6 @@ var buttonLayers = []
 var steps = {stepIndex: 0, stepList: []};
 
 var mapFloor = {
-    '-2': "XS02",
     '-1': "XS01",
     '0': "XPTE",
     '1': "XP01",
@@ -29,13 +29,17 @@ var mapFloor = {
 
 var data = {
     "Entrance to Classrooms T": 1127,
+    "Entrance to Classrooms I": 638,
     "Laib 1T": 1798,
     "Classroom 5T": 861,
     "Classroom 7T": 1727,
     "Classroom 9T": 868,
     "Classroom 11T": 1281,
     "Classroom 4T": 1717,
-    "Upstairs": 244
+    "Upstairs": 244,
+
+    "Classroom 1I": 2202,
+    "Classroom 7I": 2162
 }
 
 var colors = {
@@ -46,6 +50,16 @@ var colors = {
     red: '#D4121B',
     gray: '#5E768B',
     orangered: '#E65417'
+}
+
+var floorName = {
+    'XS01': 'Underground floor',
+    'XPTE': 'Ground floor',
+    'XP01': 'First floor',
+    'XP02': 'Second floor',
+    'XP03': 'Third floor',
+    'XP04': 'Fourth floor',
+    'XP05': 'Fifth floor',
 }
 
 /*
@@ -75,9 +89,23 @@ function init(){
         map.getPane('buttonPane').style.zIndex = 600;
     }
 
-    var mainContainer = document.getElementsByClassName('main-container')[0];
-    mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';
+    /*var mainContainer = document.getElementsByClassName('main-container')[0];
+    mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';*/
     
+    var mainContainer = document.getElementsByClassName('phone')[0];
+    mainContainer.style.width = mainContainer.offsetHeight / 2 + 'px';
+
+    var selectFloor = document.getElementById('floor');
+    for(var floorCode of Object.keys(floorName)){
+        var option = document.createElement('option');
+        option.value = Object.keys(mapFloor).find(key => mapFloor[key] == floorCode);
+        option.textContent = floorName[floorCode];
+        if(floorCode == 'XPTE'){
+            option.selected = true;
+        }
+        selectFloor.appendChild(option);
+    }
+
     /*if(localStorage.getItem('findPath') == 1){
         var accessibility = localStorage.getItem('accessibility');
         findPath(accessibility);
@@ -243,12 +271,13 @@ function styleMapFeatures(feature){
     }
     category = category.toLowerCase();
     if(isLearningSpace(category)){
-        style.color = '#FFFF36';
+        style.color = '#E6E6E6';
         style.color = colors.yellow;
         return style;
     }
-    if(category.includes("Corridoio") || category.includes('Atrio') || category.includes('Cortile')){
+    if(category.includes("corridoio") || category.includes('atrio') || category.includes('cortile')){
         style.color = '#BDB7AC';
+        style.fillOpacity = 1;
         return style;
     }
     if(isUtility(category)){
@@ -691,7 +720,7 @@ async function findPath(accessibility){
     });*/
 }
 
-async function makeSteps(start, filePath){
+async function makeSteps(start, end, filePath){
     steps.stepList.push(start);
 
     const response = await fetch(filePath);
@@ -1108,6 +1137,8 @@ function saveSourceId(sourceName){
 }
 
 function advanceInput(){
+    computePath();
+    return;
     var searchInput = document.getElementsByClassName('searchInput')[0];
     if((searchInput.value in data) == false){
         var mainContainer = document.getElementsByClassName('main-container')[0];
@@ -1152,6 +1183,37 @@ function advanceInput(){
     button.onclick = function(){goToFindPath()};*/
 }
 
+function computePath(){
+    function checkError(input){
+        if((input.value in data) == false){
+            var mainContainer = document.getElementsByClassName('main-container')[0];
+            var message = document.createElement('div');
+            message.id = 'error-input-message';
+            message.textContent = 'INPUT NOT VALID, INSERT A VALID INPUT';
+            message.style.color = 'red';
+            mainContainer.appendChild(message);
+            clean(input);
+            return true;
+        }
+        return false;
+    }
+    var sourceInput = document.getElementById('sourceInput');
+    var targetInput = document.getElementById('targetInput');
+
+    if(checkError(sourceInput) || checkError(targetInput)){
+        return;
+    }
+
+    saveSourceId(sourceInput.value);
+    saveTargetId(targetInput.value);
+
+    var accessibility = +document.getElementById('checkbox').checked;
+
+    localStorage.setItem('findPath', 1);
+    localStorage.setItem('accessibility', accessibility);
+    window.location.href='../src/navigator_mobile.html';
+}
+
 async function goToFindPath(){
     var sourceInput = document.getElementById("sourceInput");
     saveSourceId(sourceInput.value);
@@ -1170,21 +1232,152 @@ async function goToFindPath(){
 function initInput(){
     initDropdown();
 
-    var mainContainer = document.getElementsByClassName('main-container')[0];
-    mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';
+    /*var mainContainer = document.getElementsByClassName('main-container')[0];
+    mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';*/
+
+    var mainContainer = document.getElementsByClassName('phone')[0];
+    mainContainer.style.width = mainContainer.offsetHeight / 2 + 'px';
+
+    window.addEventListener('keydown', (event) => {
+        if(event.key == 'Enter'){
+            computePath();
+        }
+    });
+
+    window.addEventListener('click', (event) => {
+        if(event.target.id.includes('Input') == false){
+            toggleDropdown(null);
+        }
+    });
+
+    /*var dropDowns = document.getElementsByClassName('dropdown');
+    for(var dropdown of dropDowns){
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                var div = document.createElement("div");
+                div.onclick = (function(value) {
+                    return function() {
+                        selectOption(value);
+                    };
+                })(key);
+                div.textContent = key;
+                dropdown.appendChild(div);
+            }
+        }
+    }*/
+
+    var dropdownSource = document.getElementById('dropdownSource');
+    var dropdownTarget = document.getElementById('dropdownTarget');
+
+    function sortKeys(obj){
+        const sortedObj = Object.keys(obj)
+        .sort()
+        .reduce((acc, key) => {
+            acc[key] = obj[key];
+            return acc;
+        }, {});
+        return sortedObj;
+    }
+
+    for(var key in sortKeys(data)){
+        var div = document.createElement("div");
+        div.className = 'dropdown-element';
+        div.onclick = (function(value) {
+            return function() {
+                selectOptionSource(value);
+            };
+        })(key);
+        var img = document.createElement('img');
+        img.src = '../src/img/start_position.svg';
+        img.style.height = '75%';
+        div.appendChild(img);
+        span = document.createElement('span');
+        span.textContent = key;
+        div.appendChild(span);
+        dropdownSource.appendChild(div);
+
+        var div = document.createElement("div");
+        div.className = 'dropdown-element';
+        div.onclick = (function(value) {
+            return function() {
+                selectOptionTarget(value);
+            };
+        })(key);
+        var img = document.createElement('img');
+        img.src = '../src/img/start_position.svg';
+        img.style.height = '75%';
+        div.appendChild(img);
+        span = document.createElement('span');
+        span.textContent = key;
+        div.appendChild(span);
+        dropdownTarget.appendChild(div);
+    }
+
 
     
-    var searchInput = document.getElementsByClassName('searchInput')[0];
-    searchInput.addEventListener('keydown', function(event){
-        var errorMessage = document.getElementById('error-input-message');
-        console.log(errorMessage);
-        if(errorMessage != null){
-            errorMessage.parentElement.removeChild(errorMessage);
+    var inputs = document.getElementsByClassName('searchInput');
+    for(var input of inputs){
+        input.addEventListener('click', function(event){
+            var errorMessage = document.getElementById('error-input-message');
+            console.log(errorMessage);
+            if(errorMessage != null){
+                errorMessage.parentElement.removeChild(errorMessage);
+            }
+        })
+    }
+    
+}
+
+function filterOptions(input, dropdownId) {
+    var filter, div, i;
+    var cnt = 0;
+    filter = input.value.toUpperCase();
+    div = document.getElementById(dropdownId).getElementsByTagName("div");
+    for (i = 0; i < div.length; i++) {
+        if (div[i].innerHTML.toUpperCase().indexOf(filter) > -1 && cnt < maxDropdown) {
+            div[i].style.display = "";
+            cnt++;
+        } else {
+            div[i].style.display = "none";
         }
-        if(event.key === 'Enter'){
-            advanceInput();
+    }
+}
+
+function selectOptionSource(option){
+    document.getElementById('sourceInput').value = option;
+    toggleDropdown(null);
+}
+
+function selectOptionTarget(option){
+    document.getElementById('targetInput').value = option;
+    toggleDropdown(null);
+}
+
+function swapLocation(){
+    var sourceInput = document.getElementById('sourceInput');
+    var targetInput = document.getElementById('targetInput');
+
+    var tmp = sourceInput.value;
+    sourceInput.value = targetInput.value;
+    targetInput.value = tmp;
+}
+
+function goHome(){
+    return;
+}
+
+function toggleDropdown(id){
+    var dropdowns = document.getElementsByClassName('dropdown');
+    for(var dropdown of dropdowns){
+        if(dropdown.id != id){
+            dropdown.style.display = 'none';
         }
-    })
+    }
+    if(id == null){
+        return;
+    }
+    var dropdown = document.getElementById(id);
+    dropdown.style.display = 'flex';
 }
 
 

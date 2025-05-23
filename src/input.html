@@ -9,24 +9,20 @@
     <script defer src="../src/script.js"></script>
 </head>
 <body onload="initInput()">
-    <div class="main-container" style="margin: auto; align-items: flex-start; height: 97dvh; justify-content: flex-start;">
-        <div class="back" onclick="window.location.href='home_mobile.html'" style="align-self: flex-start; height: 30px;">
+    <div class="phone">
+        <div class="main-container" style="padding-left: 0px; padding-right: 0px;">
+        <div class="back" onclick="window.location.href='home_mobile.html'" style="align-self: flex-start; height: 30px; margin-top: 10px; margin-left: 10px;">
             <img src="../src/img/arrowhead-left.svg" style="height: 100%; border: none;">
         </div>
-        <div style="display: flex; flex-direction: column; margin-top: 50px; gap: 5px; width: 100%;">
-            <label style="margin-left: 10px;" for="targetInput" id="inputLabel">Destination</label>
+        <!--<div style="display: flex; flex-direction: column; margin-top: 30px; gap: 5px; width: 100%;">
             <div style="display: flex; gap: 10px;">
                 <input ondblclick="clean(this)" list="names" id="targetInput" class="searchInput" placeholder="What are you looking for?">
                 <datalist id="names"></datalist>
                 <button style="border-radius: 20px; cursor: pointer; font-size: 1.2rem;" onclick="advanceInput()" id="nextButton">Next</button>
             </div>
-            <div style="display: flex; margin-top: 10px; gap: 5px; align-items: center;">
-                    <input type="checkbox" name="" id="checkbox" class="accessibility-checkbox">
-                    <label for="checkbox" style="font-size: 1rem;">Avoid stairs</label>
-            </div>
-        </div>
-        <div class="container" style="display: flex; gap: 5px; align-items: center; border: solid 0px; padding: 5px 0;">
-            <div class="icons" style="border: solid 0px; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: space-around; padding: 5px 0px 5px 5px; box-sizing: border-box;">
+        </div>-->
+        <div class="container" style="display: flex; align-items: center; border: none; padding: 5px 0; margin-top: 10px; width: 100%; box-sizing: border-box; justify-content: space-evenly;">
+            <div class="icons" style="border: solid 0px; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: space-around; padding: 6px 0px; box-sizing: border-box;">
                 <div class="img-container" style="height: 20px;">
                     <img src="../src/img/start_position.svg" alt="" style="height: 100%;">
                 </div>
@@ -37,15 +33,27 @@
                     <img src="../src/img/destination_icon.svg" alt="" style="height: 100%;">
                 </div>
             </div>
-            <div class="inputs" style="display: flex; flex-direction: column;">
-                <input ondblclick="clean(this)" list="names" id="sourceInput" class="searchInput" placeholder="Where are you?">
-                <input ondblclick="clean(this)" list="names" id="targetInput" class="searchInput" placeholder="What are you looking for?">
+            <div class="inputs" style="display: flex; flex-direction: column; width: 70%;">
+                <input onclick="toggleDropdown('dropdownSource')" ondblclick="clean(this)" onkeyup="filterOptions(this, 'dropdownSource')" id="sourceInput" class="searchInput" placeholder="Where are you?">
+                <input onclick="toggleDropdown('dropdownTarget')" ondblclick="clean(this)" onkeyup="filterOptions(this, 'dropdownTarget')" id="targetInput" class="searchInput" placeholder="What are you looking for?">
                 <datalist id="names"></datalist>
             </div>
-            <div class="swap" style="border: solid 0px; height: 35px; padding: 5; cursor: pointer;">
+            <div class="swap" onclick="swapLocation()" style="border: solid 0px; height: 25px; padding: 5; cursor: pointer;">
                 <img src="../src/img/swap-icon.svg" alt="" style="height: 100%;">
             </div>
         </div>
+        <div style="display: flex; padding: 0px 15px 0px 10px; width: 100%; box-sizing: border-box; justify-content: space-between; align-items:center; margin-top: 10px">
+            <div style="display: flex; gap: 5px; align-items: center;">
+                <input type="checkbox" name="" id="checkbox" class="accessibility-checkbox">
+                <label for="checkbox" style="font-size: 1rem; cursor: pointer;">Accessible Path</label>
+            </div>
+            <button onclick="computePath()" style="border-radius: 10px; border: solid 1px; padding: 5px 15px; font-size: 1.3rem; cursor: pointer;">Go</button>
+        </div>
+        <div class="dropdown" id="dropdownSource"></div>
+        <div class="dropdown" id="dropdownTarget"></div>
     </div>
+    <div class="go-home" onclick="window.location.href='../src/home_mobile.html'"></div>
+    </div>
+    
 </body>
 </html>

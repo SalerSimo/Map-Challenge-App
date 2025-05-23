@@ -3,11 +3,9 @@ import json
 import networkx as nx
 import math
 import matplotlib.pyplot as plt
-import psycopg2
 
-import pythonFunctions
 
-def load(path: str) -> pd.DataFrame:
+def load_geojson(path: str) -> pd.DataFrame:
     #url = "src/geojson/graphs/graph_classrooms_t_i.geojson"
 
     with open(path, 'r') as f:
@@ -21,7 +19,7 @@ def create_graph(accessibility, path) -> nx.Graph:
     #path = "src/geojson/graphs/graph_classrooms_t_i.geojson"
     #path = "src/geojson/graphs/graph_central_site_01.geojson"
 
-    df = load(path)
+    df = load_geojson(path)
 
     G = nx.Graph()
 
@@ -43,7 +41,7 @@ def create_graph(accessibility, path) -> nx.Graph:
             continue
 
         if(accessibility == '0' and '_' in floor_id and (distance < 6e-6 or no_disab == 0)):
-            distance = distance * 100
+            distance = distance * 1000
 
         G.add_edge(point1, point2, floor_id=floor_id, weight=distance, vert=vert)
 

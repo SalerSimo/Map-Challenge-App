@@ -48,6 +48,16 @@ var colors = {
     orangered: '#E65417'
 }
 
+var floorName = {
+    'XS01': 'Underground floor',
+    'XPTE': 'Ground floor',
+    'XP01': 'First floor',
+    'XP02': 'Second floor',
+    'XP03': 'Third floor',
+    'XP04': 'Fourth floor',
+    'XP05': 'Fifth floor',
+}
+
 /*
 "central te": 5077,
     "central 04": 3766,
@@ -77,12 +87,15 @@ function init(){
 
     window.addEventListener('load', () => {console.log('caricaa');});
 
-    var mainContainer = document.getElementsByClassName('main-container')[0];
-    mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';
+    /*var mainContainer = document.getElementsByClassName('main-container')[0];
+    mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';*/
 
-    var mapDiv = document.getElementById('map');
+    var mainContainer = document.getElementsByClassName('phone')[0];
+    mainContainer.style.width = mainContainer.offsetHeight / 2 + 'px';
+
+    /*var mapDiv = document.getElementById('map');
     //mapDiv.style.maxHeight = mainContainer.offsetHeight * 0.5 + 'px';
-    mapDiv.style.height = '70dvh'
+    mapDiv.style.height = '70dvh'*/
 
     if(localStorage.getItem('findPath') == 1){
         var accessibility = localStorage.getItem('accessibility');
@@ -238,7 +251,7 @@ function setWeight(){
 function styleMapFeatures(feature){
     var style = {
         color: colors.gray,
-        fillOpacity: 0.5,
+        fillOpacity: 0.4,
         //weight: max((map.getZoom() - 18), 0)
         //weight: setWeight()
         weight: 0
@@ -253,8 +266,10 @@ function styleMapFeatures(feature){
         style.color = colors.yellow;
         return style;
     }
-    if(category.includes("Corridoio") || category.includes('Atrio') || category.includes('Cortile')){
+    if(category.includes("corridoio") || category.includes('atrio') || category.includes('cortile')){
         style.color = '#BDB7AC';
+        style.color = '#EEEAEA';
+        style.fillOpacity = 0.6;
         return style;
     }
     if(isUtility(category)){
@@ -666,6 +681,8 @@ async function findPath(accessibility){
     startingFloor = out[1].replace(/[( ')]/g, '');*/
     startingPoint = out[0];
     startingFloor = out[1];
+    endPoint = out[2];
+    endFloor = out[3];
     if(getFloorNumber(startingFloor) != null){
         console.log("success");
         if(pathLayers.length == 0){
@@ -677,7 +694,9 @@ async function findPath(accessibility){
         updatePathLayers();
         steps.stepIndex = 0;
         steps.stepList = [];
-        await makeSteps({floor: startingFloor, position: [startingPoint[1], startingPoint[0]]}, '../src/geojson/paths/buttons.geojson');
+        var start = {floor: startingFloor, position: [startingPoint[1], startingPoint[0]]};
+        var end = {floor: endFloor, position: [endPoint[1], endPoint[0]]};
+        await makeSteps(start, end, '../src/geojson/paths/buttons.geojson');
         await removeStepButtons();
         steps.instructions = createStepInstructions((await (await fetch('../src/geojson/paths/shortest_path.geojson')).json()).features);
         //await new Promise(resolve => setTimeout(resolve, 2000));
@@ -697,7 +716,7 @@ async function findPath(accessibility){
     });*/
 }
 
-async function makeSteps(start, filePath){
+async function makeSteps(start, end, filePath){
     steps.stepList.push(start);
 
     const response = await fetch(filePath);
@@ -711,6 +730,7 @@ async function makeSteps(start, filePath){
         };
         steps.stepList.push(step);
     }
+    steps.stepList.push(end);
 }
 
 function toggleDropdown(id) {
@@ -857,8 +877,7 @@ function spawnStepButtons(){
 function spawnInstructions(){
     var divInstruction = document.getElementById('div-instruction');
     divInstruction.textContent = steps.instructions[0];
-    divInstruction.style.border = 'solid 3px';
-    divInstruction.style.padding = '5px 10px';
+    divInstruction.style.border = 'solid 1px';
 }
 
 async function removeStepButtons(){
@@ -913,12 +932,12 @@ function createStepInstructions(features){
     var instructions = [];
     var distance = 0;
     var string;
-    
+
     for(let i = 0; i < features.length; i++){
         var feature = features[i];
         var coordinates = feature.geometry.coordinates;
         if(feature.properties.floor_id.includes('_')){
-            string = "Walk for " + distance.toFixed(0) + " meters, then take the " + getStairsOrElevator(coordinates) + " and go to " + floorToString(features[i + 1].properties.floor_id);
+            string = "Walk for " + distance.toFixed(0) + " meters, then take the " + getStairsOrElevator(coordinates) + " and go to " + floorName[features[i + 1].properties.floor_id];
             instructions.push(string);
             distance = 0;
         }else{
@@ -927,21 +946,8 @@ function createStepInstructions(features){
     }
     string = "Walk for " + distance.toFixed(0) + " meters";
     instructions.push(string);
+    instructions.push("You arrived");
     return instructions;
-}
-
-
-function cleanPolygon(polygon){
-    var cleaned = [];
-    var l = 0;
-    cleaned.push(polygon[0]);
-    for(let i = 1; i < polygon.length; i++){
-        if(polygon[i][0] != cleaned[l][0] || polygon[i][1] != cleaned[l][1]){
-            cleaned.push(polygon[i]);
-            l++;
-        }
-    }
-    return cleaned;
 }
 
 function getRealPolygon(polygon){
@@ -1008,6 +1014,19 @@ function getRealPolygon(polygon){
 }
 
 function getCenterFeature(polygon){
+    function cleanPolygon(polygon){
+        var cleaned = [];
+        var l = 0;
+        cleaned.push(polygon[0]);
+        for(let i = 1; i < polygon.length; i++){
+            if(polygon[i][0] != cleaned[l][0] || polygon[i][1] != cleaned[l][1]){
+                cleaned.push(polygon[i]);
+                l++;
+            }
+        }
+        return cleaned;
+    }
+
     polygon = cleanPolygon(polygon);
     polygon = getRealPolygon(polygon);
 

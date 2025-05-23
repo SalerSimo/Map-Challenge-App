@@ -1,9 +1,18 @@
 import sys, math
 import networkx as nx
-import psycopg2
 import json
+import pandas as pd
 
 import test_geojson
+
+def load_geojson(path: str) -> pd.DataFrame:
+    #url = "src/geojson/graphs/graph_classrooms_t_i.geojson"
+
+    with open(path, 'r') as f:
+        data = json.load(f)
+    # Flatten the GeoJSON features
+    df = pd.json_normalize(data['features'])
+    return df
 
 def getFloorNumber(floor: str) -> int:
     floor_map = {
@@ -19,14 +28,14 @@ def getFloorNumber(floor: str) -> int:
 
 
 def findPath(args):
-    conn = psycopg2.connect(
+    '''conn = psycopg2.connect(
         dbname="Challenge_Map",
         user="postgres",
         password="password",
         host="localhost",
         port=5432
     )
-    cur = conn.cursor()
+    cur = conn.cursor()'''
 
     accessibility = args[2]
 
@@ -35,23 +44,23 @@ def findPath(args):
         "src/geojson/graphs/graph_central_site_01.geojson"
     ]
 
-    vertices_table = [
-        "vertices_graph_classrooms_t_i",
-        "vertices_rooms_central_site"
-    ]
-
     for i in range(len(graph_tables)):
         #G = Create_Graph(cur, accessibility)
-        graph = graph_tables[i]
-        vertices = vertices_table[i]
+        graph_path = graph_tables[i]
+        vertices = load_geojson('src/geojson/Nodes/vertices.geojson')
+        print(vertices)
+        print("vertices loaded")
         try:
-            G = test_geojson.create_graph(accessibility, graph)
+            G = test_geojson.create_graph(accessibility, graph_path)
 
-            source_id = args[0]
-            target_id = args[1]
+            source_id = int(args[0])
+            target_id = int(args[1])
+            print(source_id, target_id)
 
-            source_node = Get_Coordinates(cur, source_id)
-            target_node = Get_Coordinates(cur, target_id)
+            source_node = Get_Coordinates(vertices, source_id)
+            target_node = Get_Coordinates(vertices, target_id)
+
+            print("coord get")
 
             path = nx.astar_path(G, source_node, target_node)
             return export_shortest_path_to_geojson(G, path)
@@ -224,7 +233,7 @@ def export_shortest_path_to_geojson(graph: nx.Graph, path):
         json.dump(icons_geojson, f)
 
         #write buttons
-    return path[0], graph.get_edge_data(path[0], path[1])['floor_id']
+    return path[0], graph.get_edge_data(path[0], path[1])['floor_id'], path[len(path) - 1], graph.get_edge_data(path[len(path) - 2], path[len(path) - 1])['floor_id']
 
 
 def Create_Graph(cur, accessibility) -> nx.Graph:
@@ -251,11 +260,16 @@ def Create_Graph(cur, accessibility) -> nx.Graph:
     return G
 
 
-def Get_Coordinates(cur, nodeId) -> tuple[float]:
+'''def Get_Coordinates(cur, nodeId) -> tuple[float]:
     #cur.execute(f"SELECT id, ST_AsText(geom) FROM vertices_graph_classrooms_t_i WHERE id = {nodeId}")
     cur.execute(f"SELECT id, ST_AsText(geom) FROM vertices WHERE id = {nodeId}")
     rows = cur.fetchall()[0]
     point = str(rows[-1]).replace("POINT Z (", "").replace(")", "").split(" ")
+    return (float(point[0]), float(point[1]))'''
+
+def Get_Coordinates(vertices, nodeId: int) -> tuple[float]:
+    row = vertices[vertices['properties.id'] == nodeId]
+    point = row['geometry.coordinates'].values[0][0:2]
     return (float(point[0]), float(point[1]))
 
 

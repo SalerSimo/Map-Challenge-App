@@ -14,78 +14,87 @@
 
 </head>
 <body onload="init()">
-    <div class="main-container" style="height: 97dvh; width: 90%; margin: auto; gap: 10px;">
-        <div id="map" style="box-sizing: border-box; width: 100%; height: 90%; border: solid; border-radius: 10px;">
-            <div class="step-container" style="box-sizing: border-box;">
-                <div class="text-instructions" id="div-instruction"></div>
-                <div class="map-buttons"></div>
-            </div>
-            <select class="select-floor" style="font-size: 1.3rem; padding: 5px; position: absolute; z-index: 1000; right: 10px; top: 10px;" name="floor" id="floor">
-                <option class="option" value="5">Floor 5</option>
-                <option class="option" value="4">Floor 4</option>
-                <option class="option" value="3">Floor 3</option>
-                <option class="option" value="2">Floor 2</option>
-                <option class="option" value="1">Floor 1</option>
-                <option class="option" value="0" selected>Floor 0</option>
-                <option class="option" value="-1">Floor -1</option>
-            </select>
-        </div>
-        <div class="input" onclick="window.location.href='../src/input.html'" style="box-sizing: border-box;"><span style="padding: 5px 10px;">What are you looking for?</span></div>
-        <div class="go-home" style="margin-top: 40px; padding: 5px; border: solid; cursor: pointer;" onclick="window.location.href='../src/home_mobile.html'">go home</div>
-        <!--<div class="inputs" style="width: 90%;">
-            <div class="navigator">
-                <div>
-                    <label for="sourceInput">Current position</label>
-                    <input ondblclick="clean(this)" list="names" id="sourceInput" class="searchInput" placeholder="Insert current location">
-                </div>
-                <div>
-                    <label for="targetInput">Destination</label>
-                    <input ondblclick="clean(this)" list="names" id="targetInput" class="searchInput" placeholder="Insert destination">
-                </div>
-                
-                <datalist id="names"></datalist>
-        
-                <button class="show-path-button" style="padding: 10px; border-radius: 20px; cursor: pointer;" onclick="findPath()">Show Path</button>-->
-
-                <!--<div style="margin-top: 20px;">
-                    <label for="accessibility">Accessibility</label>
-                    <select class="select-accessibility" style="font-size: 1.5rem; padding: 5px" id="accessibility">
-                        <option class="option" value="0">Normal</option>
-                        <option class="option" value="1">Wheelchair</option>
+    <div class="phone">
+        <div class="main-container" style="gap: 10px;">
+                <div id="map" class="map-container" style="margin-top: 10px;">
+                    <!--<div class="step-container" style="box-sizing: border-box;">
+                        <div class="text-instructions" id="div-instruction"></div>
+                        <div class="map-buttons"></div>
+                    </div>-->
+                    <select class="select-floor" name="floor" id="floor" onclick="styleSelect(this)">
+                        <!--<option class="option" value="5">Floor 5</option>
+                        <option class="option" value="4">Floor 4</option>
+                        <option class="option" value="3">Floor 3</option>
+                        <option class="option" value="2">Floor 2</option>
+                        <option class="option" value="1">Floor 1</option>
+                        <option class="option" value="0" selected>Floor 0</option>
+                        <option class="option" value="-1">Floor -1</option>-->
                     </select>
-                </div>-->
-
-                <!--<div style="display: flex; margin-top: 10px; gap: 5px; align-items: center;">
-                    <input type="checkbox" name="" id="checkbox" class="accessibility-checkbox">
-                    <label for="checkbox" style="font-size: 1.2rem;">Avoid stairs</label>
-                </div>-->
-
-                <!--<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 30px;">
-                    <div class="legend">
-                        <div class="pallino" style="background-color: #F4BA19;"></div>
-                        Learning spaces
-                    </div>
-                    <div class="legend">
-                        <div class="pallino" style="background-color: #A029FF;"></div>
-                        Utilities & Access
-                    </div>
-                    <div class="legend">
-                        <div class="pallino" style="background-color: #1A5EDB;"></div>
-                        Info points, Offices & Research Labs
-                    </div>
-                    <div class="legend">
-                        <div class="pallino" style="background-color: #33BF9E;"></div>
-                        Food & Relaxation
-                    </div>
-                </div>-->
-                <!--<div style="background-color: #F4BA1960; display: flex; flex-direction: column; align-items: center; border: solid;">
-                    <div class="icon-div" style="border: none; background-color: white; transform: translate(-0%, -0%);">
-                        <img src="../src/img/Icons/classroom_icon.svg" class="icon"></img>
-                    </div>
-                    <span class="fancy-shadow" style="border: none;">Aula 1</span>
-        
-                -->
                 </div>
+                <div class="input" onclick="window.location.href='../src/input.html'" style="box-sizing: border-box; padding: 0px 5px; display: flex; align-items: center;">
+                    <img src="../src/img/search-icon.svg" alt="" style="height: 75%;">
+                    <span style="padding: 5px 10px;">What are you looking for?</span>
+                </div>
+                <!--<div class="go-home" style="margin-top: 40px;" onclick="goHome()">Home</div>
+                <div class="inputs" style="width: 90%;">
+                    <div class="navigator">
+                        <div>
+                            <label for="sourceInput">Current position</label>
+                            <input ondblclick="clean(this)" list="names" id="sourceInput" class="searchInput" placeholder="Insert current location">
+                        </div>
+                        <div>
+                            <label for="targetInput">Destination</label>
+                            <input ondblclick="clean(this)" list="names" id="targetInput" class="searchInput" placeholder="Insert destination">
+                        </div>
+                        
+                        <datalist id="names"></datalist>
+                
+                        <button class="show-path-button" style="padding: 10px; border-radius: 20px; cursor: pointer;" onclick="findPath()">Show Path</button>-->
+
+                        <!--<div style="margin-top: 20px;">
+                            <label for="accessibility">Accessibility</label>
+                            <select class="select-accessibility" style="font-size: 1.5rem; padding: 5px" id="accessibility">
+                                <option class="option" value="0">Normal</option>
+                                <option class="option" value="1">Wheelchair</option>
+                            </select>
+                        </div>-->
+
+                        <!--<div style="display: flex; margin-top: 10px; gap: 5px; align-items: center;">
+                            <input type="checkbox" name="" id="checkbox" class="accessibility-checkbox">
+                            <label for="checkbox" style="font-size: 1.2rem;">Avoid stairs</label>
+                        </div>-->
+
+                        <!--<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 30px;">
+                            <div class="legend">
+                                <div class="pallino" style="background-color: #F4BA19;"></div>
+                                Learning spaces
+                            </div>
+                            <div class="legend">
+                                <div class="pallino" style="background-color: #A029FF;"></div>
+                                Utilities & Access
+                            </div>
+                            <div class="legend">
+                                <div class="pallino" style="background-color: #1A5EDB;"></div>
+                                Info points, Offices & Research Labs
+                            </div>
+                            <div class="legend">
+                                <div class="pallino" style="background-color: #33BF9E;"></div>
+                                Food & Relaxation
+                            </div>
+                        </div>-->
+                        <!--<div style="background-color: #F4BA1960; display: flex; flex-direction: column; align-items: center; border: solid;">
+                            <div class="icon-div" style="border: none; background-color: white; transform: translate(-0%, -0%);">
+                                <img src="../src/img/Icons/classroom_icon.svg" class="icon"></img>
+                            </div>
+                            <span class="fancy-shadow" style="border: none;">Aula 1</span>
+                
+                        -->
+                        </div>
+
+        <div class="go-home" onclick="goHome()"></div>
+    </div>
+
+    
             </div>
         </div>
     </div>
