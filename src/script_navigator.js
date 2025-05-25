@@ -93,18 +93,10 @@ function init(){
     //var mainContainer = document.getElementsByClassName('phone')[0];
     //mainContainer.style.width = mainContainer.offsetHeight / 2 + 'px';
 
-    updateMapLayers();
-
     /*var mapDiv = document.getElementById('map');
     //mapDiv.style.maxHeight = mainContainer.offsetHeight * 0.5 + 'px';
     mapDiv.style.height = '70dvh'*/
 
-    if(localStorage.getItem('findPath') == 1){
-        var accessibility = localStorage.getItem('accessibility');
-        findPath(accessibility);
-    }
-
-    localStorage.setItem('findPath', 0);
 
     map = L.map('map').setView([latitude, longitude], zoomLevel);
     /*L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -184,6 +176,13 @@ function init(){
 
     //updateMapLayers();
     updateLayers();
+
+    if(localStorage.getItem('findPath') == 1){
+        var accessibility = localStorage.getItem('accessibility');
+        findPath(accessibility);
+    }
+
+    localStorage.setItem('findPath', 0);
 
     //initDropdown();
     
