@@ -1,6 +1,4 @@
 from flask import Flask, request, jsonify, send_from_directory
-import subprocess
-import os
 
 from pythonFunctions import findPath
 

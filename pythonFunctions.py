@@ -40,14 +40,14 @@ def findPath(args):
     accessibility = args[2]
 
     graph_tables = [
-        "../Map-Challenge-App/src/geojson/graphs/graph_classrooms_t_i.geojson",
-        "../Map-Challenge-App/src/geojson/graphs/graph_central_site_01.geojson"
+        "src/geojson/graphs/graph_classrooms_t_i.geojson",
+        "src/geojson/graphs/graph_central_site_01.geojson"
     ]
 
     for i in range(len(graph_tables)):
         #G = Create_Graph(cur, accessibility)
         graph_path = graph_tables[i]
-        vertices = load_geojson('../Map-Challenge-App/src/geojson/Nodes/vertices.geojson')
+        vertices = load_geojson('src/geojson/Nodes/vertices.geojson')
         print(vertices)
         print("vertices loaded")
         try:
@@ -267,7 +267,7 @@ def Create_Graph(cur, accessibility) -> nx.Graph:
     point = str(rows[-1]).replace("POINT Z (", "").replace(")", "").split(" ")
     return (float(point[0]), float(point[1]))'''
 
-def Get_Coordinates(vertices, nodeId: int) -> tuple[float]:
+def Get_Coordinates(vertices, nodeId: int) -> tuple[float, float]:
     row = vertices[vertices['properties.id'] == nodeId]
     point = row['geometry.coordinates'].values[0][0:2]
     return (float(point[0]), float(point[1]))
