@@ -90,8 +90,10 @@ function init(){
     /*var mainContainer = document.getElementsByClassName('main-container')[0];
     mainContainer.style.width = mainContainer.offsetHeight * 9 / 19 + 'px';*/
 
-    var mainContainer = document.getElementsByClassName('phone')[0];
-    mainContainer.style.width = mainContainer.offsetHeight / 2 + 'px';
+    //var mainContainer = document.getElementsByClassName('phone')[0];
+    //mainContainer.style.width = mainContainer.offsetHeight / 2 + 'px';
+
+    updateMapLayers();
 
     /*var mapDiv = document.getElementById('map');
     //mapDiv.style.maxHeight = mainContainer.offsetHeight * 0.5 + 'px';
