@@ -1,17 +1,6 @@
-var data = {
-    "Entrance to Classrooms T": 1127,
-    "Entrance to Classrooms I": 638,
-    "Laib 1T": 1798,
-    "Classroom 5T": 861,
-    "Classroom 7T": 1727,
-    "Classroom 9T": 868,
-    "Classroom 11T": 1281,
-    "Classroom 4T": 1717,
-    "Upstairs": 244,
+import {data} from "./script.js"
 
-    "Classroom 1I": 2202,
-    "Classroom 7I": 2162
-}
+var locationData = data;
 
 function initInput(){
 
@@ -25,7 +14,7 @@ function initInput(){
         return sortedObj;
     }
 
-    //initDropdown();
+    //locationData = JSON.parse(localStorage.getItem('locationData'));
 
     window.addEventListener('keydown', (event) => {
         if(event.key == 'Enter'){
@@ -43,7 +32,7 @@ function initInput(){
     var dropdownTarget = document.getElementById('dropdownTarget');
 
 
-    for(var key in sortKeys(data)){
+    for(var key in sortKeys(locationData)){
         var div = document.createElement("div");
         div.className = 'dropdown-element';
         div.onclick = (function(value) {
@@ -55,7 +44,7 @@ function initInput(){
         img.src = '../src/img/start_position.svg';
         img.style.height = '75%';
         div.appendChild(img);
-        span = document.createElement('span');
+        var span = document.createElement('span');
         span.textContent = key;
         div.appendChild(span);
         dropdownSource.appendChild(div);
@@ -71,7 +60,7 @@ function initInput(){
         img.src = '../src/img/start_position.svg';
         img.style.height = '75%';
         div.appendChild(img);
-        span = document.createElement('span');
+        var span = document.createElement('span');
         span.textContent = key;
         div.appendChild(span);
         dropdownTarget.appendChild(div);
@@ -81,9 +70,8 @@ function initInput(){
     
     var inputs = document.getElementsByClassName('searchInput');
     for(var input of inputs){
-        input.addEventListener('click', function(event){
+        input.addEventListener('click', function(){
             var errorMessage = document.getElementById('error-input-message');
-            console.log(errorMessage);
             if(errorMessage != null){
                 errorMessage.parentElement.removeChild(errorMessage);
             }
@@ -94,21 +82,27 @@ function initInput(){
 
 function computePath(){
     function saveTargetId(targetName){
-        targetId = data[targetName];
+        var targetId = locationData[targetName];
         localStorage.setItem('targetId', targetId);
     }
     function saveSourceId(sourceName){
-        sourceId = data[sourceName];
-        localStorage.setItem('sourceId', sourceId)
+        var sourceId = locationData[sourceName];
+        localStorage.setItem('sourceId', sourceId);
     }
 
     function checkError(input){
-        if((input.value in data) == false){
+        if((input.value in locationData) == false){
+            var errorMessage = document.getElementById('error-input-message');
+            if(errorMessage != null){
+                return true;
+            }
             var mainContainer = document.getElementsByClassName('main-container')[0];
             var message = document.createElement('div');
             message.id = 'error-input-message';
             message.textContent = 'INPUT NOT VALID, INSERT A VALID INPUT';
             message.style.color = 'red';
+            message.style.marginLeft = '20px';
+            message.style.marginTop = '10px';
             mainContainer.appendChild(message);
             clean(input);
             return true;
@@ -119,6 +113,22 @@ function computePath(){
     var targetInput = document.getElementById('targetInput');
 
     if(checkError(sourceInput) || checkError(targetInput)){
+        return;
+    }
+    if(sourceInput.value == targetInput.value){
+        var errorMessage = document.getElementById('error-input-message');
+        if(errorMessage != null){
+            return true;
+        }
+        console.log('equal');
+        var mainContainer = document.getElementsByClassName('main-container')[0];
+        var message = document.createElement('div');
+        message.id = 'error-input-message';
+        message.textContent = 'CURRENT LOCATION AND DESTINATION MUST BE DIFFERENT';
+        message.style.color = 'red';
+        message.style.marginLeft = '20px';
+        message.style.marginTop = '10px';
+        mainContainer.appendChild(message);
         return;
     }
 
@@ -179,3 +189,11 @@ function filterOptions(input, dropdownId) {
 function clean(object){
     object.value = "";
 }
+
+
+window.initInput = initInput;
+window.toggleDropdown = toggleDropdown;
+window.clean = clean;
+window.filterOptions = filterOptions;
+window.swapLocation = swapLocation;
+window.computePath = computePath;
