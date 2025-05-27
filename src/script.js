@@ -236,8 +236,7 @@ function styleMapFeatures(feature){
         return style;
     }
     if(category.includes("corridoio") || category.includes('atrio') || category.includes('cortile')){
-        style.color = '#BDB7AC';
-        style.fillOpacity = 1;
+        style.color = '#EEEAEA';
         return style;
     }
     if(isUtility(category)){
